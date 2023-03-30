@@ -1,3 +1,10 @@
+import pandas as pd
+import regex as re
+
+import urllib.parse as urlparse
+from tld import get_tld
+import urllib.request as urlreq
+
 def url_extractor(X):
 
     cols = ['qty_dot_url','qty_hyphen_url','qty_underline_url','qty_slash_url','qty_questionmark_url',
