@@ -14,7 +14,6 @@ scikit-learn = "^1.2.2"
 regex = "^2023.3.23"
 tld = "^0.13"
 xgboost = "^1.7.4"
-gunicorn = "^20.1.0"
 
 
 [build-system]
