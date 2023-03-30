@@ -27,3 +27,16 @@ def score():
     model = pickle.load(open('xg_model.pkl', 'rb'))
 
     return str(model.predict_proba(data.to_numpy())[0][1])
+
+def score():
+    
+    # Get url
+    url =  request.json['url']
+    
+    # Convert to features df
+    data = url_extractor(url)
+    
+    # Load model
+    model = pickle.load(open('xg_model.pkl', 'rb'))
+
+    return str(model.predict_proba(data.to_numpy())[0][1])
