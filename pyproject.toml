@@ -8,12 +8,13 @@ packages = [{include = "gone_phishin_xgov_hackathon"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-flask = "2.2.3"
+flask = "^2.2.3"
 pandas = "^1.5.3"
 scikit-learn = "^1.2.2"
 regex = "^2023.3.23"
 tld = "^0.13"
 xgboost = "^1.7.4"
+gunicorn = "^20.1.0"
 
 
 [build-system]
