@@ -14,7 +14,7 @@ def url_extractor(X):
             'qty_at_directory','qty_and_directory','qty_asterisk_directory','qty_percent_directory',
             'directory_length','qty_dot_params','qty_hyphen_params','qty_underline_params','qty_slash_params',
             'qty_questionmark_params','qty_equal_params','qty_at_params','qty_and_params','qty_percent_params',
-            'params_length','tld_present_params','qty_params','email_in_url']    
+            'params_length','tld_present_params','qty_params','email_in_url'] 
     
     
     url_list = []
@@ -133,7 +133,7 @@ def url_extractor(X):
         new_df.append(row1)
 
     combined = pd.DataFrame(new_df, columns=cols)
-    return display(combined)
+    return combined
 
 
 url_extractor("This is my tweet check it out https://nevincan.av.tr/otp.html")
