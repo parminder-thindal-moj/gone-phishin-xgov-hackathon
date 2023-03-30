@@ -26,4 +26,4 @@ def score():
     # Load model
     model = pickle.load(open('xg_model.pkl', 'rb'))
 
-    return str(model.predict(data.to_numpy())[0])
+    return str(model.predict_proba(data.to_numpy())[0][1])
