@@ -20,9 +20,26 @@ def url_extractor(X):
     url_list = []
 
     myString = X
-    url_test = re.search("(?P<url>https?://[^\s]+)", myString).group("url")
-    url_list.append(url_test)
+    url_test = re.search("(?P<url>https?://[^\s]+)", myString)
+
+    if url_test is None:
+        url_test = re.search("(?P<url>http?://[^\s]+)", myString)
+
+    if url_test is None:
+        url_test = re.search("(?P<url>www?[^\s]+)", myString)
+
+    print(url_test)
     
+    if url_test is None:
+        return str(-1)
+
+    url_test = url_test.group("url")
+
+    if url_test[0:3] == 'www':
+        url_test = 'http://' + url_test
+
+    url_list.append(url_test)
+    print(url_list)
 
     new_df = []
 
