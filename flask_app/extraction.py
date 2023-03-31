@@ -19,6 +19,9 @@ def url_extractor(X):
     
     url_list = []
 
+    if X[-1] == '/':
+        X = X[:-1]
+
     myString = X
     url_test = re.search("(?P<url>https?://[^\s]+)", myString)
 
