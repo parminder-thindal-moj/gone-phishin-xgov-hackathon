@@ -30,11 +30,9 @@ def url_extractor(X):
 
     if url_test is None:
         url_test = re.search("(?P<url>www?[^\s]+)", myString)
-
-    print(url_test)
     
     if url_test is None:
-        return str(-1)
+        return -1
 
     url_test = url_test.group("url")
 
@@ -42,7 +40,6 @@ def url_extractor(X):
         url_test = 'http://' + url_test
 
     url_list.append(url_test)
-    print(url_list)
 
     new_df = []
 
@@ -51,6 +48,14 @@ def url_extractor(X):
         underline_pattern = re.compile(r'__(.*?)__') 
         #url_test = str(url_test)
         path = urlparse.urlparse(url_test)
+
+        whitelist = pd.read_csv('flask_app/whitelist.csv')
+
+        print(path.netloc)
+        print(whitelist['site'])
+
+        if path.netloc in whitelist['site'].to_list():
+            return -1
 
 
         #Extracting column information
@@ -156,4 +161,5 @@ def url_extractor(X):
     return combined
 
 
-url_extractor("This is my tweet check it out https://nevincan.av.tr/otp.html")
+print(url_extractor("This is my tweet check it out https://nevincan.av.tr/otp.html"))
+print(url_extractor('www.youtube.com'))
