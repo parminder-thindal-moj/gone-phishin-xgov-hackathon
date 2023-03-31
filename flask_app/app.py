@@ -5,7 +5,7 @@ import pandas as pd
 import pickle
 import xgboost
 from flask_app.extraction import url_extractor
-
+from flask_cors import CORS
 import regex as re
 
 import urllib.parse as urlparse
@@ -13,6 +13,11 @@ from tld import get_tld
 import urllib.request as urlreq
 
 app = Flask(__name__)
+CORS(app)
+
+@app.route("/", methods=['GET'])
+def hello():
+    return "Hello World!"
 
 @app.route("/score", methods=['POST'])
 def score():
