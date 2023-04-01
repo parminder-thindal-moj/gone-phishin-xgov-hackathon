@@ -2,3 +2,5 @@
 __pycache__/
 constants.py
 env/
+notebooks/.ipynb_checkpoints
+flask/__pycache__
