@@ -27,14 +27,12 @@ notifications_client = NotificationsAPIClient(GOV_API_KEY)
 ### Get all the recieved texts
 current_recieved_txts = get_all_received_texts(notifications_client)
 
-# Set up the existing_smss
-existing_smss = []
+# Set up the existing_sms_msgs
+existing_sms_msgs = []
 
 for sms in current_recieved_txts['received_text_messages']:
-    existing_smss.append(sms['id'])
-    print(sms)
+    existing_sms_msgs.append(sms['id'])
 
-print(existing_smss)
 
 ## Running the service
 
@@ -43,13 +41,13 @@ while True:
     print(msg)
     
     # Get texts
-    all_sms = get_all_received_texts(notifications_client)
+    all_sms_msgs = get_all_received_texts(notifications_client)
     
-    recieved_sms_texts = all_sms['received_text_messages']
+    recieved_sms_msgs = all_sms_msgs['received_text_messages']
 
-    for sms in recieved_sms_texts:
+    for sms in recieved_sms_msgs:
 
-        if get_sms_id(sms) in existing_smss:
+        if get_sms_id(sms) in existing_sms_msgs:
             break
 
         print(sms)
@@ -78,16 +76,15 @@ while True:
                          sms_id_to_send=sms_to_send)
             
             #Add to existing text message list
-            existing_smss.append(get_sms_id(sms=sms))
+            existing_sms_msgs.append(get_sms_id(sms=sms))
             
         except Exception as e:
             print("some sort of error occurred, let's hope it's not important")
             print(e)
 
     time.sleep(1)
-
-    
-if __name__ == "__main__":
-    msg = "Running GOV.UK SPAM SERVICE"
-    print(msg)
+  
+# if __name__ == "__main__":
+#     msg = "Running the GOV.UK SPAM SERVICE"
+#     print(msg)
     

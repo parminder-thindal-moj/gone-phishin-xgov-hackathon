@@ -12,7 +12,6 @@ import urllib.request as urlreq
 
 from utils import SPAM_MSG_ID, NOT_SPAM_MSG_ID, SPAM_THRESHOLD
 
-
 def get_all_received_texts(NotificationsAPIClient):
     """Get all the recieved text messages to the digital phone number"""
     return NotificationsAPIClient.get_received_texts()
@@ -41,6 +40,14 @@ def get_spam_score(url):
     
     # Convert to features df
     data = url_extractor(url)
+
+    if type(data) is int:
+
+        if data == -1:
+            return 0
+            
+        if data == "-1":
+            return 0
     
     # Load model
     model = pickle.load(open('xg_model.pkl', 'rb'))

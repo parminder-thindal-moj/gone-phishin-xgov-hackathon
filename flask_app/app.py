@@ -15,10 +15,6 @@ import urllib.request as urlreq
 app = Flask(__name__)
 CORS(app)
 
-@app.route("/", methods=['GET'])
-def hello():
-    return "Hello World!"
-
 @app.route("/score", methods=['POST'])
 def score():
     
