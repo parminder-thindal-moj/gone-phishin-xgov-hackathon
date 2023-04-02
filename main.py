@@ -1,25 +1,9 @@
 ### Import Libraries
 from constants import GOV_API_KEY
-
-import flask
-from flask import Flask, request
-from flask_app.extraction import url_extractor
-
-import json
-import pandas as pd
-import pickle
-import xgboost
-import regex as re
-
-import urllib.parse as urlparse
-from tld import get_tld
-import urllib.request as urlreq
 import time
-
 from notifications_python_client.notifications import NotificationsAPIClient
 from utils import SPAM_THRESHOLD
 from functions.preprocessing import get_all_received_texts, get_sms_id, get_user_phone_number, get_all_sms_ids, get_spam_score, get_spam_classification, set_sms_id_to_send, send_sms_msg, get_sms_msg
-
 
 ### Set the Notify API Client
 api_client = NotificationsAPIClient(GOV_API_KEY)
