@@ -20,7 +20,7 @@ existing_sms_ids = get_all_sms_ids(recieved_sms_msgs=recieved_sms_msgs)
 ## Running the service
 
 while True:
-    msg = "Running GOV.UK SPAM SERVICE"
+    msg = "Running GOV.UK SPAM DETECTION SERVICE"
     print(msg)
     
     # Get all the payload of all the recieved sms msgs
