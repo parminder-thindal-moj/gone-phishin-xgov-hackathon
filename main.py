@@ -17,7 +17,7 @@ import urllib.request as urlreq
 import time
 
 from notifications_python_client.notifications import NotificationsAPIClient
-from utils import SPAM_MSG_ID, NOT_SPAM_MSG_ID, SPAM_THRESHOLD
+from utils import SPAM_THRESHOLD
 from functions.preprocessing import get_all_received_texts, get_sms_id, get_user_phone_number, get_all_sms_ids, get_spam_score, get_spam_classification, set_sms_id_to_send, send_sms_msg, get_sms_msg
 
 
@@ -52,13 +52,14 @@ while True:
         
         try:
             # Get user sms text
-            user_sms = get_sms_msg(sms=sms)
+            user_sms_msg = get_sms_msg(sms=sms)
+            print(sms)
             
             # Get the user phone number
             user_phone_number = get_user_phone_number(sms=sms)
             
             # Get spam score
-            spam_score = get_spam_score(user_sms)
+            spam_score = get_spam_score(user_sms_msg)
 
             # get spam classfication
             spam_classication = get_spam_classification(spam_score=spam_score, 

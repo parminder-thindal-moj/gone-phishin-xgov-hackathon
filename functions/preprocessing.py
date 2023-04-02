@@ -65,7 +65,7 @@ def get_spam_score(url):
     return spam_score
 
 
-def get_spam_classification(spam_score:float, SPAM_THRESHOLD):
+def get_spam_classification(spam_score:float, SPAM_THRESHOLD:float=SPAM_THRESHOLD):
     """Get the text classfication of a spam score"""
     if spam_score >= SPAM_THRESHOLD:
         spam_classification = "SPAM"
