@@ -5,28 +5,24 @@ from notifications_python_client.notifications import NotificationsAPIClient
 from utils import SPAM_THRESHOLD
 from functions.preprocessing import get_all_received_texts, get_sms_id, get_user_phone_number, get_all_sms_ids, get_spam_score, get_spam_classification, set_sms_id_to_send, send_sms_msg, get_sms_msg
 
-### Set the Notify API Client
+### Setup the Notify API Client
 api_client = NotificationsAPIClient(GOV_API_KEY)
 
-### Get all the recieved texts
+### Get all the received texts
 all_sms_payload = get_all_received_texts(api_client)
 
-# Get just the payload of all the recieved text msgs
+# Get just the payload of all the received text msgs
 recieved_sms_msgs = all_sms_payload['received_text_messages']
 
-# Set up a list for the existing sms ids
+# Setup a list for the existing sms ids
 existing_sms_ids = get_all_sms_ids(recieved_sms_msgs=recieved_sms_msgs)
 
 ## Running the service
-
-while True:
-    msg = "Running GOV.UK SPAM DETECTION SERVICE"
-    print(msg)
-    
-    # Get all the payload of all the recieved sms msgs
+def wrapper():
+    # Get all the payload of all the received sms msgs
     all_sms_msgs_payload = get_all_received_texts(api_client)
     
-    # Get just the payload of all the recieved text msgs
+    # Get just the payload of all the received text msgs
     recieved_sms_msgs = all_sms_msgs_payload['received_text_messages']
     
     for sms in recieved_sms_msgs:
@@ -35,7 +31,7 @@ while True:
             break
         
         try:
-            # Get user sms text
+            # Get user sms text payload
             user_sms_msg = get_sms_msg(sms=sms)
             print(sms)
             
@@ -45,19 +41,19 @@ while True:
             # Get spam score
             spam_score = get_spam_score(user_sms_msg)
 
-            # get spam classfication
+            # Get spam classfication
             spam_classication = get_spam_classification(spam_score=spam_score, 
                                                         SPAM_THRESHOLD=SPAM_THRESHOLD)
             
-            # get spam_sms_id to send:
+            # Get spam_sms_id to send:
             sms_to_send = set_sms_id_to_send(spam_classification=spam_classication)
             
-            # send the sms msg back to the user
+            # Send the sms msg back to the user
             send_sms_msg(NotificationsAPIClient=api_client, 
                          phone_number=user_phone_number, 
                          sms_id_to_send=sms_to_send)
             
-            #Add to existing text message list
+            #Add sms id to existing sms list
             existing_sms_ids.append(get_sms_id(sms=sms))
             
         except Exception as e:
@@ -67,7 +63,9 @@ while True:
 
     time.sleep(1)
   
-# if __name__ == "__main__":
-#     msg = "Running the GOV.UK SPAM SERVICE"
-#     print(msg)
+if __name__ == "__main__":
+    while True:
+        msg = "Running GOV.UK SPAM DETECTION SERVICE"
+        print(msg)
+        wrapper()
     
