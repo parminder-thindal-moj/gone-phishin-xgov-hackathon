@@ -19,8 +19,8 @@ def get_all_received_texts(NotificationsAPIClient):
 
 def get_sms_id(sms):
     """Get the sms id number"""
-    id_number = sms['id']
-    return id_number
+    sms_id_number = sms['id']
+    return sms_id_number
 
 
 def get_sms_msg(sms):
@@ -35,20 +35,28 @@ def get_user_phone_number(sms):
     return phone_number
 
 
+def get_all_sms_ids(recieved_sms_msgs:dict):
+    """F to get all the sms ids"""
+    sms_id_list = []
+    for sms in recieved_sms_msgs:
+        sms_id = get_sms_id(sms)
+        sms_id_list.append(sms_id)
+    return sms_id_list
+
+
 def get_spam_score(url):
     """Get the spam score of a given url"""
     
     # Convert to features df
     data = url_extractor(url)
 
+    """checking data type, to set score to 0 for urls in the whitelist"""
     if type(data) is int:
-
         if data == -1:
             return 0
-            
-        if data == "-1":
+        elif data == "-1":
             return 0
-    
+        
     # Load model
     model = pickle.load(open('xg_model.pkl', 'rb'))
     
