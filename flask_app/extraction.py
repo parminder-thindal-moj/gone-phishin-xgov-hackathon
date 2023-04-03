@@ -153,4 +153,3 @@ def url_extractor(X):
     return combined
 
 
-url_extractor("This is my tweet check it out https://nevincan.av.tr/otp.html")
