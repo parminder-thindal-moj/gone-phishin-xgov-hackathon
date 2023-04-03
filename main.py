@@ -2,8 +2,8 @@
 from constants import GOV_API_KEY
 import time
 from notifications_python_client.notifications import NotificationsAPIClient
-from utils import SPAM_THRESHOLD
-from functions.preprocessing import get_all_received_texts, get_sms_id, get_user_phone_number, get_all_sms_ids, get_spam_score, get_spam_classification, set_sms_id_to_send, send_sms_msg, get_sms_msg
+from utils import SPAM_THRESHOLD, TIME_INTERVAL_SECS, Spinner
+from functions.preprocessing import get_all_received_texts, get_sms_id, get_user_phone_number, get_all_sms_ids, get_spam_score, get_spam_classification, set_sms_id_to_send, send_sms_msg, get_sms_msg, url_extractor
 
 ### Setup the Notify API Client
 api_client = NotificationsAPIClient(GOV_API_KEY)
@@ -33,7 +33,6 @@ def wrapper():
         try:
             # Get user sms text payload
             user_sms_msg = get_sms_msg(sms=sms)
-            print(sms)
             
             # Get the user phone number
             user_phone_number = get_user_phone_number(sms=sms)
@@ -53,6 +52,8 @@ def wrapper():
                          phone_number=user_phone_number, 
                          sms_id_to_send=sms_to_send)
             
+            print('Scored ' + str(user_sms_msg) + ' as ' + spam_classication)
+            
             #Add sms id to existing sms list
             existing_sms_ids.append(get_sms_id(sms=sms))
             
@@ -61,11 +62,12 @@ def wrapper():
             print(error_msg)
             print(e)
 
-    time.sleep(1)
+    time.sleep(TIME_INTERVAL_SECS)
   
 if __name__ == "__main__":
+    msg = "Running GOV.UK SPAM DETECTION SERVICE with interval " + str(TIME_INTERVAL_SECS) + " second:"
+    print(msg)
     while True:
-        msg = "Running GOV.UK SPAM DETECTION SERVICE"
-        print(msg)
-        wrapper()
+        with Spinner():
+            wrapper()
     
