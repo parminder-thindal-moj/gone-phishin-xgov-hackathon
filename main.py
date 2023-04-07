@@ -29,6 +29,9 @@ def wrapper():
 
         if get_sms_id(sms) in existing_sms_ids:
             break
+
+        #Add sms id to existing sms list
+        existing_sms_ids.append(get_sms_id(sms=sms))
         
         try:
             # Get user sms text payload
@@ -53,9 +56,6 @@ def wrapper():
                          sms_id_to_send=sms_to_send)
             
             print('Scored ' + str(user_sms_msg) + ' as ' + spam_classication)
-            
-            #Add sms id to existing sms list
-            existing_sms_ids.append(get_sms_id(sms=sms))
             
         except Exception as e:
             error_msg = "some sort of error occurred, let's hope it's not important"

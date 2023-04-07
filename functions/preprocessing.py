@@ -4,7 +4,7 @@ import json
 import pandas as pd
 import pickle
 import xgboost
-from flask_app.extraction import url_extractor
+from flask_app.utils.extraction import url_extractor
 
 import regex as re
 import urllib.parse as urlparse
