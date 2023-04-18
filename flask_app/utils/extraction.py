@@ -5,7 +5,7 @@ import urllib.parse as urlparse
 from tld import get_tld
 import urllib.request as urlreq
 
-def url_extractor(X):
+def url_extractor(url):
 
     cols = ['qty_dot_url','qty_hyphen_url','qty_underline_url','qty_slash_url','qty_questionmark_url',
             'qty_equal_url','qty_at_url','qty_and_url','qty_asterisk_url','qty_tld_url','length_url',
@@ -19,7 +19,10 @@ def url_extractor(X):
     
     url_list = []
 
-    myString = X
+    if url[-1] == '/':
+        url = url[:-1]
+
+    myString = url
     url_test = re.search("(?P<url>https?://[^\s]+)", myString)
 
     if url_test is None:
@@ -27,11 +30,9 @@ def url_extractor(X):
 
     if url_test is None:
         url_test = re.search("(?P<url>www?[^\s]+)", myString)
-
-    print(url_test)
     
     if url_test is None:
-        return str(-1)
+        return -1
 
     url_test = url_test.group("url")
 
@@ -39,16 +40,19 @@ def url_extractor(X):
         url_test = 'http://' + url_test
 
     url_list.append(url_test)
-    print(url_list)
 
     new_df = []
-
+    
     for url_test in url_list:
 
         underline_pattern = re.compile(r'__(.*?)__') 
         #url_test = str(url_test)
         path = urlparse.urlparse(url_test)
 
+        whitelist = pd.read_csv("./data/whitelist.csv")
+
+        if path.netloc in whitelist['site'].to_list():
+            return -1
 
         #Extracting column information
 
@@ -151,5 +155,3 @@ def url_extractor(X):
 
     combined = pd.DataFrame(new_df, columns=cols)
     return combined
-
-
