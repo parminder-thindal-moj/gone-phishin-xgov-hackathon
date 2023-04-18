@@ -1,0 +1,15 @@
+[Unit]
+Description=Continuous Hackathon Script
+After=network.target
+
+[Service]
+User=ec2-user
+WorkingDirectory=/home/ec2-user/gone-phishin-xgov-hackathon
+ExecStart=/usr/bin/python3 /home/ec2-user/gone-phishin-xgov-hackathon/main.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=Hackathon_Script
+
+[Install]
+WantedBy=multi-user.target
