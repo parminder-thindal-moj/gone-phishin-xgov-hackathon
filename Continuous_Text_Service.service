@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 User=ec2-user
-WorkingDirectory=/home/ec2-user/Text_Service/gone-phishin-xgov-hackathon
-ExecStart=/usr/bin/python3 /home/ec2-user/Text_Service/gone-phishin-xgov-hackathon/main.py
+WorkingDirectory=/home/ec2-user/gone-phishin-xgov-hackathon
+ExecStart=/usr/bin/python3 /home/ec2-user/gone-phishin-xgov-hackathon/main.py
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
